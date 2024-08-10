@@ -5,6 +5,9 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnOpenModal = document.querySelectorAll('.btn-show-modal');
 const header = document.querySelector('.header');
+const message = document.createElement('div');
+const btnScrollTo = document.querySelector('.btn-scroll-to');
+const section1 = document.querySelector('#section-1');
 
 // OverLay With singup modal
 const openModal = function (e) {
@@ -29,7 +32,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Cookies Message
-const message = document.createElement('div');
+
 message.classList.add('cookie-message');
 message.innerHTML = `We cookied for improved functionality and analytics. 
   <button class="btn btn-close-cookie">Got it!</button>`;
@@ -40,8 +43,6 @@ document
     message.remove();
   });
 
-const btnScrollTo = document.querySelector('.btn-scroll-to');
-const section1 = document.querySelector('#section-1');
 
 btnScrollTo.addEventListener('click', function (e) {
   // const s1coords = section1.getBoundingClientRect();
@@ -74,3 +75,26 @@ btnScrollTo.addEventListener('click', function (e) {
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+
+// Page Navigation
+// document.querySelectorAll('.nav--link').forEach(function(e){
+//   e.addEventListener('click' , function(el){
+//     el.preventDefault();
+
+//     const id = this.getAttribute('href');
+    
+//     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+//   })
+// })
+
+// using event delegation 
+
+document.querySelector('.nav--links').addEventListener('click' , function(e){
+  e.preventDefault();
+  if(e.target.classList.contains('nav--link')){
+        const id = e.target.getAttribute('href');
+        document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  }
+  
+})
