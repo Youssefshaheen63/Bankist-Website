@@ -119,3 +119,23 @@ tabsContainer.addEventListener('click' , function(e){
   clicked.classList.add('operations-tab--active')
   document.querySelector(`.operations-content--${clicked.dataset.tab}`).classList.add('operations-content--active')
 })
+
+
+// nice effect on nav
+const nav = document.querySelector('.nav');
+
+const handlehover = function(e , opacity){
+  if(e.target.classList.contains('nav--link')){
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav--link');
+    const logo = link.closest('.nav').querySelector('img');
+  
+     
+      siblings.forEach(e =>{ if (e !== link) e.style.opacity = this;});
+      logo.style.opacity = this;
+     
+   }
+}
+
+nav.addEventListener('mouseover' , handlehover.bind(0.5))
+nav.addEventListener('mouseout' , handlehover.bind(1))
