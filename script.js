@@ -98,3 +98,24 @@ document.querySelector('.nav--links').addEventListener('click' , function(e){
   }
   
 })
+
+
+// Building a tabbed component
+const tabs = document.querySelectorAll('.operations-tab');
+const tabsContainer = document.querySelector('.operations-tab-container');
+const tabsContent = document.querySelectorAll('.operations-content');
+
+
+tabsContainer.addEventListener('click' , function(e){
+  const clicked = e.target.closest('.operations-tab')
+  console.log(clicked);
+  
+  if(!clicked) return;
+
+
+  tabs.forEach(e=> e.classList.remove('operations-tab--active'))
+  tabsContent.forEach(c=> c.classList.remove('operations-content--active'))
+
+  clicked.classList.add('operations-tab--active')
+  document.querySelector(`.operations-content--${clicked.dataset.tab}`).classList.add('operations-content--active')
+})
