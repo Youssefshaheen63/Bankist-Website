@@ -43,7 +43,6 @@ document
     message.remove();
   });
 
-
 btnScrollTo.addEventListener('click', function (e) {
   // const s1coords = section1.getBoundingClientRect();
   // console.log(s1coords);
@@ -76,66 +75,92 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-
 // Page Navigation
 // document.querySelectorAll('.nav--link').forEach(function(e){
 //   e.addEventListener('click' , function(el){
 //     el.preventDefault();
 
 //     const id = this.getAttribute('href');
-    
+
 //     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
 //   })
 // })
 
-// using event delegation 
+// using event delegation
 
-document.querySelector('.nav--links').addEventListener('click' , function(e){
+document.querySelector('.nav--links').addEventListener('click', function (e) {
   e.preventDefault();
-  if(e.target.classList.contains('nav--link')){
-        const id = e.target.getAttribute('href');
-        document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  if (e.target.classList.contains('nav--link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
-  
-})
-
+});
 
 // Building a tabbed component
 const tabs = document.querySelectorAll('.operations-tab');
 const tabsContainer = document.querySelector('.operations-tab-container');
 const tabsContent = document.querySelectorAll('.operations-content');
 
-
-tabsContainer.addEventListener('click' , function(e){
-  const clicked = e.target.closest('.operations-tab')
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations-tab');
   console.log(clicked);
-  
-  if(!clicked) return;
 
+  if (!clicked) return;
 
-  tabs.forEach(e=> e.classList.remove('operations-tab--active'))
-  tabsContent.forEach(c=> c.classList.remove('operations-content--active'))
+  tabs.forEach(e => e.classList.remove('operations-tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations-content--active'));
 
-  clicked.classList.add('operations-tab--active')
-  document.querySelector(`.operations-content--${clicked.dataset.tab}`).classList.add('operations-content--active')
-})
-
+  clicked.classList.add('operations-tab--active');
+  document
+    .querySelector(`.operations-content--${clicked.dataset.tab}`)
+    .classList.add('operations-content--active');
+});
 
 // nice effect on nav
 const nav = document.querySelector('.nav');
 
-const handlehover = function(e , opacity){
-  if(e.target.classList.contains('nav--link')){
+const handlehover = function (e, opacity) {
+  if (e.target.classList.contains('nav--link')) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav--link');
     const logo = link.closest('.nav').querySelector('img');
-  
-     
-      siblings.forEach(e =>{ if (e !== link) e.style.opacity = this;});
-      logo.style.opacity = this;
-     
-   }
-}
 
-nav.addEventListener('mouseover' , handlehover.bind(0.5))
-nav.addEventListener('mouseout' , handlehover.bind(1))
+    siblings.forEach(e => {
+      if (e !== link) e.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', handlehover.bind(0.5));
+nav.addEventListener('mouseout', handlehover.bind(1));
+
+// // Sticky nav
+
+// const initCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll' , function(){
+//   if(window.scrollY > initCoords.top){
+//     nav.classList.add('sticky')
+//   }else{
+//     nav.classList.remove('sticky')
+//   }
+// })
+
+// ---------------------
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerobserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerobserver.observe(header);
